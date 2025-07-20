@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16
+    image: postgres:14
     environment:
       POSTGRES_DB: contracts
       POSTGRES_USER: admin
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ../src/main/resources/database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   pgdata:

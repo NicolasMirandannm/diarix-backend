@@ -11,7 +11,12 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @SpringBootTest
 class CustomContractsServerTests {
 
-	static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16-alpine");
+	@Test
+	void loadContext() {}
+
+	@SuppressWarnings("resource")
+	static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14")
+			.withInitScript("database/init.sql");
 
 	@BeforeAll
 	static void beforeAll() {
@@ -28,8 +33,11 @@ class CustomContractsServerTests {
 		registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
 		registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
 		registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+		registry.add("spring.flyway.enabled", () -> "true");
+		registry.add("spring.flyway.schemas", () -> "contracts");
+		registry.add("spring.flyway.locations", () -> "classpath:database/migrations");
+		registry.add("spring.flyway.url", postgreSQLContainer::getJdbcUrl);
+		registry.add("spring.flyway.user", postgreSQLContainer::getUsername);
+		registry.add("spring.flyway.password", postgreSQLContainer::getPassword);
 	}
-
-	@Test
-	void loadContext() {}
 }

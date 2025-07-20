@@ -36,3 +36,8 @@ out/
 ### IDE's ###
 .vscode/
 .idea/
+
+### Gradle ###
+gradle/
+gradlew
+gradlew.bat
