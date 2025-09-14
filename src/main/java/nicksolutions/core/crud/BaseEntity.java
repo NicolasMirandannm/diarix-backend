@@ -2,7 +2,6 @@ package nicksolutions.core.crud;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
@@ -10,12 +9,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 
-@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,11 +23,12 @@ import java.util.UUID;
 public abstract class BaseEntity {
 
   public abstract String getId();
+
   public abstract void setId(String id);
 
   @CreatedDate
   @Column(name = "created_date", updatable = false)
-  private LocalDateTime createdDate;
+  private OffsetDateTime createdDate;
 
   @CreatedBy
   @Column(name = "created_by", updatable = false)
@@ -36,7 +36,7 @@ public abstract class BaseEntity {
 
   @LastModifiedDate
   @Column(name = "modified_date")
-  private LocalDateTime modifiedDate;
+  private OffsetDateTime modifiedDate;
 
   @LastModifiedBy
   @Column(name = "modified_by")
@@ -49,5 +49,15 @@ public abstract class BaseEntity {
   @PrePersist
   public void prePersist() {
     this.setId(UUID.randomUUID().toString());
+    this.createdDate = OffsetDateTime.now();
+    this.modifiedDate = OffsetDateTime.now();
+    this.createdBy = SecurityContextHolder.getContext().getAuthentication().getName();
+    this.modifiedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+  }
+
+  @PreUpdate
+  public void preUpdate() {
+    this.modifiedDate = OffsetDateTime.now();
+    this.modifiedBy = SecurityContextHolder.getContext().getAuthentication().getName();
   }
 }
