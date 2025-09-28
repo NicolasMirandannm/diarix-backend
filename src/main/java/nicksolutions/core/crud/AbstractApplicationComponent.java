@@ -3,7 +3,7 @@ package nicksolutions.core.crud;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public abstract class AbstractApplicationComponent<Dto, Entity extends BaseEntity, Service extends BaseService<Entity>> implements ApplicationComponent<Dto, Entity> {
+public abstract class AbstractApplicationComponent<Dto, Entity extends BaseEntity, Service extends BaseService<Entity>> implements ApplicationComponent<Dto> {
 
   protected final ApplicationMapper<Dto, Entity> mapper;
   protected final Service service;

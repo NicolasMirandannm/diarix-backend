@@ -1,15 +1,16 @@
 package nicksolutions.contracts;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @SpringBootTest
-class CustomContractsServerTests {
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@WithMockUser(username = "contract-manager-id", roles = {"ADMIN"}, value = "contract-manager-id")
+public class CustomContractsServerTests {
 
 	@Test
 	void loadContext() {}

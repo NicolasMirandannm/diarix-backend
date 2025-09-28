@@ -2,7 +2,7 @@ package nicksolutions.core.crud;
 
 import org.springframework.data.domain.Page;
 
-public interface ApplicationComponent<Dto, Entity extends BaseEntity> {
+public interface ApplicationComponent<Dto> {
 
   Dto getById(String id);
   Dto create(Dto dto);

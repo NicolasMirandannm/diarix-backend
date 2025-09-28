@@ -6,7 +6,7 @@ import nicksolutions.contracts.application.auth.dto.TokenDto;
 import nicksolutions.contracts.domain.auth.ContractManager;
 import nicksolutions.core.crud.ApplicationComponent;
 
-public interface ContractManagerComponent extends ApplicationComponent<ContractManagerDto, ContractManager> {
+public interface ContractManagerComponent extends ApplicationComponent<ContractManagerDto> {
   TokenDto signUp(ContractManagerDto contractManagerDto);
   TokenDto signIn(LoginDto loginDto);
 }
