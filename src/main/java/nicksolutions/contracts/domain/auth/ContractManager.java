@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-import nicksolutions.core.crud.BaseEntity;
+import nicksolutions.core.crud.BaseEntityNonMultiTenancy;
 
 @Data
 @Entity
@@ -14,7 +14,7 @@ import nicksolutions.core.crud.BaseEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ContractManager extends BaseEntity {
+public class ContractManager extends BaseEntityNonMultiTenancy {
 
   @Id
   private String id;

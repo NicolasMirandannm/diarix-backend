@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 
 @Data
 @NoArgsConstructor
@@ -46,8 +48,7 @@ public abstract class BaseEntity {
   @Column(name = "version")
   private Long version;
 
-  @PrePersist
-  public void prePersist() {
+  protected void prePersist() {
     this.setId(UUID.randomUUID().toString());
     this.createdDate = OffsetDateTime.now();
     this.modifiedDate = OffsetDateTime.now();
@@ -55,9 +56,12 @@ public abstract class BaseEntity {
     this.modifiedBy = SecurityContextHolder.getContext().getAuthentication().getName();
   }
 
-  @PreUpdate
-  public void preUpdate() {
+  protected void preUpdate() {
     this.modifiedDate = OffsetDateTime.now();
     this.modifiedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+  }
+
+  public boolean isNew() {
+    return isNull(getId());
   }
 }

@@ -1,22 +1,23 @@
 package nicksolutions.contracts.domain.enterprise;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-import nicksolutions.core.crud.BaseEntity;
+import nicksolutions.core.crud.BaseEntityMultiTenancy;
+import org.hibernate.annotations.TenantId;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "enterprise")
+@Entity
+@Table(name = "enterprise")
 @EqualsAndHashCode(callSuper = false)
-public class Enterprise extends BaseEntity {
+public class Enterprise extends BaseEntityMultiTenancy {
 
   @Id
   private String id;
 
+  @TenantId
   @Column(name = "contract_manager_id")
   private String contractManagerId;
 
@@ -37,6 +38,10 @@ public class Enterprise extends BaseEntity {
 
   @Column(name = "address")
   private String address;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "status")
+  private EnterpriseStatusRegister status;
 }
 
 

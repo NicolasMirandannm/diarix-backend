@@ -1,11 +1,10 @@
 package nicksolutions.contracts.application.enterprise.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nicksolutions.contracts.domain.enterprise.EnterpriseStatusRegister;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -26,6 +25,7 @@ public class EnterpriseDto implements Serializable {
   private String ownerEmail;
   private String ownerPhone;
   private String address;
+  private EnterpriseStatusRegister status;
   private Long version;
 
 }

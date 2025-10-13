@@ -21,6 +21,7 @@ public class EnterpriseMapper implements ApplicationMapper<EnterpriseDto, Enterp
         .ownerEmail(entity.getOwnerEmail())
         .ownerPhone(entity.getOwnerPhone())
         .ownerName(entity.getOwnerName())
+        .status(entity.getStatus())
         .build();
     dto.setVersion(entity.getVersion());
     return dto;
@@ -39,6 +40,7 @@ public class EnterpriseMapper implements ApplicationMapper<EnterpriseDto, Enterp
         .ownerEmail(enterpriseDto.getOwnerEmail())
         .ownerPhone(enterpriseDto.getOwnerPhone())
         .ownerName(enterpriseDto.getOwnerName())
+        .status(enterpriseDto.getStatus())
         .build();
     entity.setVersion(enterpriseDto.getVersion());
     return entity;
