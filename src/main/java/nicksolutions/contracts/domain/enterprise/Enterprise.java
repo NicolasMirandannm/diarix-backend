@@ -3,6 +3,7 @@ package nicksolutions.contracts.domain.enterprise;
 import jakarta.persistence.*;
 import lombok.*;
 import nicksolutions.core.crud.BaseEntityMultiTenancy;
+import nicksolutions.core.shared.StatusRegister;
 import org.hibernate.annotations.TenantId;
 
 @Data
@@ -41,7 +42,7 @@ public class Enterprise extends BaseEntityMultiTenancy {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status")
-  private EnterpriseStatusRegister status;
+  private StatusRegister status;
 }
 
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nicksolutions.contracts.domain.enterprise.EnterpriseStatusRegister;
+import nicksolutions.core.shared.StatusRegister;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -25,7 +25,7 @@ public class EnterpriseDto implements Serializable {
   private String ownerEmail;
   private String ownerPhone;
   private String address;
-  private EnterpriseStatusRegister status;
+  private StatusRegister status;
   private Long version;
 
 }
