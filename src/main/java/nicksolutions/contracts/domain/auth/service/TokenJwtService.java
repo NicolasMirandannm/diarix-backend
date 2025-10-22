@@ -24,7 +24,7 @@ public class TokenJwtService {
 
   public String generateCustomerJwtToken(ContractManager contractManager) {
     var claims = JwtClaimsSet.builder()
-        .issuer("ordermatic")
+        .issuer("diarixpro")
         .subject(contractManager.getId())
         .issuedAt(Instant.now())
         .build();
