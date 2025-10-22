@@ -6,6 +6,8 @@ import nicksolutions.core.crud.BaseEntityMultiTenancy;
 import nicksolutions.core.shared.StatusRegister;
 import org.hibernate.annotations.TenantId;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,6 +45,9 @@ public class Enterprise extends BaseEntityMultiTenancy {
   @Enumerated(EnumType.STRING)
   @Column(name = "status")
   private StatusRegister status;
+
+  @Column(name = "base_daily_rate")
+  private BigDecimal baseDailyRate;
 }
 
 
