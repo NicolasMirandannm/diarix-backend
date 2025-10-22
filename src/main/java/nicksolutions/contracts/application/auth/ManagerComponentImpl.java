@@ -33,7 +33,7 @@ public class ManagerComponentImpl extends AbstractApplicationComponent<ManagerDt
     String token = signUpUseCase.execute(mapper.toEntity(ManagerDto));
     return TokenDto.builder()
         .token(token)
-        .ManagerId(tokenJwtService.getManagerIdFromToken(token))
+        .managerId(tokenJwtService.getManagerIdFromToken(token))
         .build();
   }
 
@@ -42,7 +42,7 @@ public class ManagerComponentImpl extends AbstractApplicationComponent<ManagerDt
     String token = signInUseCase.execute(loginDto.getEmail(), loginDto.getPassword());
     return TokenDto.builder()
         .token(token)
-        .ManagerId(tokenJwtService.getManagerIdFromToken(token))
+        .managerId(tokenJwtService.getManagerIdFromToken(token))
         .build();
   }
 }

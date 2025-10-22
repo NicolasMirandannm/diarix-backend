@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/contract-managers")
+@RequestMapping("/managers")
 public class ManagerController {
 
   private final ManagerComponent managerComponent;
