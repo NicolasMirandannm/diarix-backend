@@ -4,7 +4,7 @@ import nicksolutions.core.crud.BaseRepository;
 
 import java.util.Optional;
 
-public interface ContractManagerRepository extends BaseRepository<ContractManager> {
+public interface ManagerRepository extends BaseRepository<Manager> {
   boolean existsByEmail(String email);
-  Optional<ContractManager> findByEmail(String email);
+  Optional<Manager> findByEmail(String email);
 }

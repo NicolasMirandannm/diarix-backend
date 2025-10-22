@@ -1,4 +1,4 @@
-package nicksolutions.contracts.domain.dayLaborer;
+package nicksolutions.contracts.domain.daylaborer;
 
 import nicksolutions.core.crud.BaseRepository;
 

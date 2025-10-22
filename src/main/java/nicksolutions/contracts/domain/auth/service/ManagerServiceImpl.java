@@ -1,7 +1,7 @@
 package nicksolutions.contracts.domain.auth.service;
 
-import nicksolutions.contracts.domain.auth.ContractManager;
-import nicksolutions.contracts.domain.auth.ContractManagerRepository;
+import nicksolutions.contracts.domain.auth.Manager;
+import nicksolutions.contracts.domain.auth.ManagerRepository;
 import nicksolutions.core.crud.BaseAbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ContractManagerServiceImpl extends BaseAbstractServiceImpl<ContractManager, ContractManagerRepository> implements ContractManagerService {
+public class ManagerServiceImpl extends BaseAbstractServiceImpl<Manager, ManagerRepository> implements ManagerService {
 
   @Autowired
-  public ContractManagerServiceImpl(ContractManagerRepository repository) {
+  public ManagerServiceImpl(ManagerRepository repository) {
     super(repository);
   }
 
@@ -22,7 +22,7 @@ public class ContractManagerServiceImpl extends BaseAbstractServiceImpl<Contract
   }
 
   @Override
-  public Optional<ContractManager> findByEmail(String email) {
+  public Optional<Manager> findByEmail(String email) {
     return repository.findByEmail(email);
   }
 }

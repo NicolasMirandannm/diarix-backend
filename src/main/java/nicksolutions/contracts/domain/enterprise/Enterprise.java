@@ -21,8 +21,8 @@ public class Enterprise extends BaseEntityMultiTenancy {
   private String id;
 
   @TenantId
-  @Column(name = "contract_manager_id")
-  private String contractManagerId;
+  @Column(name = "manager_id")
+  private String ManagerId;
 
   @Column(name = "name")
   private String name;

@@ -12,15 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @MappedSuperclass
 public abstract class BaseEntityMultiTenancy extends BaseEntity {
 
-  public abstract String getContractManagerId();
+  public abstract String getManagerId();
 
-  public abstract void setContractManagerId(String id);
+  public abstract void setManagerId(String id);
 
   @Override
   @PrePersist
   public void prePersist() {
     super.prePersist();
-    this.setContractManagerId(SecurityContextHolder.getContext().getAuthentication().getName());
+    this.setManagerId(SecurityContextHolder.getContext().getAuthentication().getName());
   }
 
   @Override

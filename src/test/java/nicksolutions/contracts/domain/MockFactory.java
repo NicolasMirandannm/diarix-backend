@@ -8,7 +8,7 @@ public class MockFactory {
 
   public Enterprise createEnterprise() {
     return Enterprise.builder()
-        .contractManagerId("contract-manager-id")
+        .ManagerId("contract-manager-id")
         .name("enterprise")
         .cnpj("12.345.678/0001-90")
         .ownerName("Owner Name")

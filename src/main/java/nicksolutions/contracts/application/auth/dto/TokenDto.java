@@ -20,5 +20,5 @@ public class TokenDto implements Serializable {
   @Builder.Default
   private String type = "Bearer";
   private String token;
-  private String contractManagerId;
+  private String ManagerId;
 }

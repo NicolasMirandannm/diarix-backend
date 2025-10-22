@@ -9,12 +9,12 @@ import nicksolutions.core.crud.BaseEntityNonMultiTenancy;
 
 @Data
 @Entity
-@Table(name = "contract_manager")
+@Table(name = "manager")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ContractManager extends BaseEntityNonMultiTenancy {
+public class Manager extends BaseEntityNonMultiTenancy {
 
   @Id
   private String id;

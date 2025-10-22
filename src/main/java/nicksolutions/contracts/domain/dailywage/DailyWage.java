@@ -1,4 +1,4 @@
-package nicksolutions.contracts.domain.dailyWage;
+package nicksolutions.contracts.domain.dailywage;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,8 +21,8 @@ public class DailyWage extends BaseEntityMultiTenancy {
     private String id;
 
     @TenantId
-    @Column(name = "contract_manager_id")
-    private String contractManagerId;
+    @Column(name = "manager_id")
+    private String managerId;
 
     @Column(name = "enterprise_id")
     private String enterpriseId;

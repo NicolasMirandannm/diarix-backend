@@ -1,4 +1,4 @@
-package nicksolutions.contracts.domain.dailyWage;
+package nicksolutions.contracts.domain.dailywage;
 
 import nicksolutions.core.crud.BaseRepository;
 

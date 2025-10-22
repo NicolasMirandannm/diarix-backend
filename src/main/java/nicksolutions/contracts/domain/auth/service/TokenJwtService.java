@@ -1,6 +1,6 @@
 package nicksolutions.contracts.domain.auth.service;
 
-import nicksolutions.contracts.domain.auth.ContractManager;
+import nicksolutions.contracts.domain.auth.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -22,17 +22,17 @@ public class TokenJwtService {
     this.jwtDecoder = jwtDecoder;
   }
 
-  public String generateCustomerJwtToken(ContractManager contractManager) {
+  public String generateCustomerJwtToken(Manager manager) {
     var claims = JwtClaimsSet.builder()
         .issuer("diarixpro")
-        .subject(contractManager.getId())
+        .subject(manager.getId())
         .issuedAt(Instant.now())
         .build();
 
     return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
 
-  public String getContractManagerIdFromToken(String token) {
+  public String getManagerIdFromToken(String token) {
     return jwtDecoder.decode(token.replace("Bearer ", "")).getSubject();
   }
 }

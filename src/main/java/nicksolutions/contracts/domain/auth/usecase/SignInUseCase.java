@@ -1,7 +1,7 @@
 package nicksolutions.contracts.domain.auth.usecase;
 
-import nicksolutions.contracts.domain.auth.ContractManager;
-import nicksolutions.contracts.domain.auth.service.ContractManagerService;
+import nicksolutions.contracts.domain.auth.Manager;
+import nicksolutions.contracts.domain.auth.service.ManagerService;
 import nicksolutions.contracts.domain.auth.service.TokenJwtService;
 import nicksolutions.core.exceptions.CustomHttpException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +12,23 @@ import java.util.Optional;
 @Component
 public class SignInUseCase {
 
-  private final ContractManagerService contractManagerService;
+  private final ManagerService managerService;
   private final PasswordEncryptionUseCase passwordEncryptionUseCase;
   private final TokenJwtService tokenJwtService;
 
   @Autowired
-  public SignInUseCase(ContractManagerService contractManagerService, PasswordEncryptionUseCase passwordEncryptionUseCase, TokenJwtService tokenJwtService) {
-    this.contractManagerService = contractManagerService;
+  public SignInUseCase(ManagerService managerService, PasswordEncryptionUseCase passwordEncryptionUseCase, TokenJwtService tokenJwtService) {
+    this.managerService = managerService;
     this.passwordEncryptionUseCase = passwordEncryptionUseCase;
     this.tokenJwtService = tokenJwtService;
   }
 
   public String execute(String email, String password) {
-    Optional<ContractManager> contractManager = contractManagerService.findByEmail(email);
+    Optional<Manager> manager = managerService.findByEmail(email);
 
-    if (contractManager.isEmpty() || !passwordEncryptionUseCase.checkPassword(password, contractManager.get().getPassword())) {
+    if (manager.isEmpty() || !passwordEncryptionUseCase.checkPassword(password, manager.get().getPassword())) {
       throw CustomHttpException.forbidden("Credenciais inválidas.");
     }
-    return tokenJwtService.generateCustomerJwtToken(contractManager.get());
+    return tokenJwtService.generateCustomerJwtToken(manager.get());
   }
 }

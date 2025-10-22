@@ -1,33 +1,33 @@
 package nicksolutions.contracts.application.auth;
 
-import nicksolutions.contracts.application.auth.dto.ContractManagerDto;
-import nicksolutions.contracts.domain.auth.ContractManager;
+import nicksolutions.contracts.application.auth.dto.ManagerDto;
+import nicksolutions.contracts.domain.auth.Manager;
 import nicksolutions.core.crud.ApplicationMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContractManagerMapper implements ApplicationMapper<ContractManagerDto, ContractManager> {
+public class ManagerMapper implements ApplicationMapper<ManagerDto, Manager> {
 
-  public ContractManager toEntity(ContractManagerDto dto) {
+  public Manager toEntity(ManagerDto dto) {
     if (dto == null) {
       return null;
     }
-    var contractManager = ContractManager.builder()
+    var Manager = Manager.builder()
             .id(dto.getId())
             .name(dto.getName())
             .email(dto.getEmail())
             .password(dto.getPassword())
             .phoneNumber(dto.getPhoneNumber())
             .build();
-    contractManager.setVersion(dto.getVersion());
-    return contractManager;
+    Manager.setVersion(dto.getVersion());
+    return Manager;
   }
 
-  public ContractManagerDto toDto(ContractManager entity) {
+  public ManagerDto toDto(Manager entity) {
     if (entity == null) {
       return null;
     }
-    return ContractManagerDto.builder()
+    return ManagerDto.builder()
             .id(entity.getId())
             .name(entity.getName())
             .email(entity.getEmail())

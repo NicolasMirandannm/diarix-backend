@@ -1,4 +1,4 @@
-package nicksolutions.contracts.domain.dayLaborer;
+package nicksolutions.contracts.domain.daylaborer;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,8 +19,8 @@ public class DayLaborer extends BaseEntityMultiTenancy {
     private String id;
 
     @TenantId
-    @Column(name = "contract_manager_id")
-    private String contractManagerId;
+    @Column(name = "manager_id")
+    private String ManagerId;
 
     @Column(name = "name")
     private String name;

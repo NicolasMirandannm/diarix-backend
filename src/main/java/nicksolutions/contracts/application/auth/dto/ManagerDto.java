@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContractManagerDto implements Serializable {
+public class ManagerDto implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -2063444471382853707L;
