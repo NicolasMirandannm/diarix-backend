@@ -44,8 +44,8 @@ public class SecurityConfiguration {
         .cors(_ -> {})
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.POST, "/contract-managers/sign-up").permitAll()
-            .requestMatchers(HttpMethod.POST, "/contract-managers/sign-in").permitAll()
+            .requestMatchers(HttpMethod.POST, "/managers/sign-up").permitAll()
+            .requestMatchers(HttpMethod.POST, "/managers/sign-in").permitAll()
             .anyRequest().authenticated())
         .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
         .build();
