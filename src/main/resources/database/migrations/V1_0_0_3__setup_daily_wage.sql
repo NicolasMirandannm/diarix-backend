@@ -9,6 +9,7 @@ create table daily_wage
     bonus           decimal(10, 2),
     deduction       decimal(10, 2),
     total_payment   decimal(10, 2) not null,
+    base_daily_rate decimal(10, 2) not null,
     notes           varchar(500),
     payment_status  varchar(20)    not null,
     created_date    timestamp      not null default current_timestamp,

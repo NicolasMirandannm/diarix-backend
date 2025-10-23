@@ -2,6 +2,8 @@ package nicksolutions.contracts.domain.dailywage;
 
 import jakarta.persistence.*;
 import lombok.*;
+import nicksolutions.contracts.domain.daylaborer.DayLaborer;
+import nicksolutions.contracts.domain.enterprise.Enterprise;
 import nicksolutions.core.crud.BaseEntityMultiTenancy;
 import nicksolutions.core.shared.PaymentStatus;
 import org.hibernate.annotations.TenantId;
@@ -24,11 +26,13 @@ public class DailyWage extends BaseEntityMultiTenancy {
     @Column(name = "manager_id")
     private String managerId;
 
-    @Column(name = "enterprise_id")
-    private String enterpriseId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "enterprise_id", nullable = false)
+    private Enterprise enterprise;
 
-    @Column(name = "day_laborer_id")
-    private String dayLaborerId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "day_laborer_id", nullable = false)
+    private DayLaborer dayLaborer;
 
     @Column(name = "base_daily_rate")
     private BigDecimal baseDailyRate;
