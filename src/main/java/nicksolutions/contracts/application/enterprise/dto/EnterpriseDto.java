@@ -8,6 +8,7 @@ import nicksolutions.core.shared.StatusRegister;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -26,6 +27,7 @@ public class EnterpriseDto implements Serializable {
   private String ownerPhone;
   private String address;
   private StatusRegister status;
+  private BigDecimal baseDailyRate;
   private Long version;
 
 }

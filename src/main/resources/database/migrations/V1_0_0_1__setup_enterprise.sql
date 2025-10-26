@@ -9,6 +9,7 @@ create table enterprise
     owner_phone   varchar(20),
     address       varchar(255),
     status        varchar(20)  not null,
+    base_daily_rate decimal(10, 2) not null,
     created_date  timestamp    not null default current_timestamp,
     created_by    varchar(100) not null,
     modified_date timestamp    not null default current_timestamp,

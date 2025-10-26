@@ -9,7 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/daily-wages")
+@RequestMapping("/daily-wage")
 public class DailyWageController {
 
     private final DailyWageComponent dailyWageComponent;

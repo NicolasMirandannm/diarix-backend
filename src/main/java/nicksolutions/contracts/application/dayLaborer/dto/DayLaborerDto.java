@@ -8,6 +8,7 @@ import nicksolutions.core.shared.StatusRegister;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -25,4 +26,7 @@ public class DayLaborerDto implements Serializable {
     private StatusRegister status;
     private String pixKey;
     private Long version;
+    private BigDecimal deduction;
+    private BigDecimal bonus;
+    private BigDecimal paymentValue;
 }

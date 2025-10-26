@@ -11,6 +11,9 @@ import nicksolutions.core.shared.PaymentStatus;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,12 +26,15 @@ public class DailyWageDto implements Serializable {
 
   private String id;
   private EnterpriseDto enterprise;
-  private DayLaborerDto dayLaborer;
+  private List<DayLaborerDto> dayLaborer;
   private BigDecimal baseDailyRate;
   private BigDecimal bonus;
   private BigDecimal deduction;
-  private BigDecimal totalPayment;
+  private BigDecimal paymentValue;
   private String notes;
   private PaymentStatus paymentStatus;
+  private LocalDate workDate;
+  private LocalTime startHour;
+  private LocalTime endHour;
   private Long version;
 }

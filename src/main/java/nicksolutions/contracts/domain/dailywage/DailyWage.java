@@ -9,6 +9,8 @@ import nicksolutions.core.shared.PaymentStatus;
 import org.hibernate.annotations.TenantId;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -43,11 +45,20 @@ public class DailyWage extends BaseEntityMultiTenancy {
     @Column(name = "deduction")
     private BigDecimal deduction;
 
-    @Column(name = "total_payment")
-    private BigDecimal totalPayment;
+    @Column(name = "paymentValue")
+    private BigDecimal paymentValue;
 
     @Column(name = "notes")
     private String notes;
+
+    @Column(name = "work_date")
+    private LocalDate workDate;
+
+    @Column(name = "start_hour")
+    private LocalTime startHour;
+
+    @Column(name = "end_hour")
+    private LocalTime endHour;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")

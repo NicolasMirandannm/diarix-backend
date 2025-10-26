@@ -5,25 +5,41 @@ import nicksolutions.contracts.application.dayLaborer.dto.DayLaborerDto;
 import nicksolutions.contracts.application.enterprise.dto.EnterpriseDto;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.contracts.domain.daylaborer.DayLaborer;
+import nicksolutions.contracts.domain.daylaborer.DayLaborerRepository;
 import nicksolutions.contracts.domain.enterprise.Enterprise;
+import nicksolutions.contracts.domain.enterprise.EnterpriseRepository;
 import nicksolutions.core.crud.ApplicationMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWage> {
+
+  private final EnterpriseRepository enterpriseRepository;
+  private final DayLaborerRepository dayLaborerRepository;
+
+  public DailyWageMapper(EnterpriseRepository enterpriseRepository,
+                         DayLaborerRepository dayLaborerRepository) {
+    this.enterpriseRepository = enterpriseRepository;
+    this.dayLaborerRepository = dayLaborerRepository;
+  }
 
   @Override
   public DailyWageDto toDto(DailyWage entity) {
     var dto = DailyWageDto.builder()
         .id(entity.getId())
         .enterprise(toEnterpriseDto(entity.getEnterprise()))
-        .dayLaborer(toDayLaborerDto(entity.getDayLaborer()))
+        .dayLaborer(List.of(toDayLaborerDto(entity.getDayLaborer())))
         .baseDailyRate(entity.getBaseDailyRate())
         .bonus(entity.getBonus())
         .deduction(entity.getDeduction())
-        .totalPayment(entity.getTotalPayment())
+        .paymentValue(entity.getPaymentValue())
         .notes(entity.getNotes())
         .paymentStatus(entity.getPaymentStatus())
+        .workDate(entity.getWorkDate())
+        .startHour(entity.getStartHour())
+        .endHour(entity.getEndHour())
         .build();
     dto.setVersion(entity.getVersion());
     return dto;
@@ -42,35 +58,51 @@ public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWag
         .id(dayLaborer.getId())
         .name(dayLaborer.getName())
         .cpf(dayLaborer.getCpf())
+        .phoneNumber(dayLaborer.getPhoneNumber())
+        .status(dayLaborer.getStatus())
+        .pixKey(dayLaborer.getPixKey())
+        .version(dayLaborer.getVersion())
         .build();
   }
 
   @Override
-  public DailyWage toEntity(DailyWageDto dailyWageDto) {
+  public DailyWage toEntity(DailyWageDto dto) {
+    DayLaborerDto firstDayLaborer = dto.getDayLaborer() != null &&
+        !dto.getDayLaborer().isEmpty()
+        ? dto.getDayLaborer().get(0)
+        : null;
+
     var entity = DailyWage.builder()
-        .id(dailyWageDto.getId())
-        .enterprise(toEnterpriseEntity(dailyWageDto.getEnterprise()))
-        .dayLaborer(toDayLaborerEntity(dailyWageDto.getDayLaborer()))
-        .baseDailyRate(dailyWageDto.getBaseDailyRate())
-        .bonus(dailyWageDto.getBonus())
-        .deduction(dailyWageDto.getDeduction())
-        .totalPayment(dailyWageDto.getTotalPayment())
-        .notes(dailyWageDto.getNotes())
-        .paymentStatus(dailyWageDto.getPaymentStatus())
+        .id(dto.getId())
+        .enterprise(toEnterpriseEntity(dto.getEnterprise()))
+        .dayLaborer(firstDayLaborer != null ? toDayLaborerEntity(firstDayLaborer) : null)
+        .baseDailyRate(dto.getBaseDailyRate())
+        .bonus(dto.getBonus())
+        .deduction(dto.getDeduction())
+        .paymentValue(dto.getPaymentValue())
+        .notes(dto.getNotes())
+        .paymentStatus(dto.getPaymentStatus())
+        .workDate(dto.getWorkDate())
+        .startHour(dto.getStartHour())
+        .endHour(dto.getEndHour())
         .build();
-    entity.setVersion(dailyWageDto.getVersion());
+    entity.setVersion(dto.getVersion());
     return entity;
   }
 
   private Enterprise toEnterpriseEntity(EnterpriseDto enterpriseDto) {
-    return Enterprise.builder()
-        .id(enterpriseDto.getId())
-        .build();
+    if (enterpriseDto == null || enterpriseDto.getId() == null) {
+      return null;
+    }
+    return enterpriseRepository.findById(enterpriseDto.getId())
+        .orElseThrow(() -> new RuntimeException("Empresa não encontrada: " + enterpriseDto.getId()));
   }
 
   private DayLaborer toDayLaborerEntity(DayLaborerDto dayLaborerDto) {
-    return DayLaborer.builder()
-        .id(dayLaborerDto.getId())
-        .build();
+    if (dayLaborerDto == null || dayLaborerDto.getId() == null) {
+      return null;
+    }
+    return dayLaborerRepository.findById(dayLaborerDto.getId())
+        .orElseThrow(() -> new RuntimeException("Diarista não encontrado: " + dayLaborerDto.getId()));
   }
 }
