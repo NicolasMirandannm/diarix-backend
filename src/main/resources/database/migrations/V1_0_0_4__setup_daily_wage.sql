@@ -5,6 +5,7 @@ create table daily_wage
     date            timestamp      not null default current_timestamp,
     enterprise_id   varchar(40)    not null,
     day_laborer_id  varchar(40)    not null,
+    payment_id      varchar(40),
     base_daily_rate decimal(10, 2) not null,
     bonus           decimal(10, 2),
     deduction       decimal(10, 2),
@@ -23,5 +24,7 @@ create table daily_wage
     constraint fk_daily_wage_enterprise
         foreign key (enterprise_id) references enterprise (id),
     constraint fk_daily_wage_day_laborer
-        foreign key (day_laborer_id) references day_laborer (id)
+        foreign key (day_laborer_id) references day_laborer (id),
+    constraint fk_daily_wage_payment
+        foreign key (payment_id) references payment (id)
 );
