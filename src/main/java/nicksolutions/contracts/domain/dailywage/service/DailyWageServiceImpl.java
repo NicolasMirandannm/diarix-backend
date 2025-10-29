@@ -1,6 +1,5 @@
 package nicksolutions.contracts.domain.dailywage.service;
 
-import nicksolutions.contracts.configuration.DailyWageException;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.contracts.domain.dailywage.DailyWageRepository;
 import nicksolutions.core.crud.BaseAbstractServiceImpl;

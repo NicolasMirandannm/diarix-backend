@@ -2,10 +2,14 @@ package nicksolutions.contracts.rest;
 
 import nicksolutions.contracts.application.dayLaborer.DayLaborerComponent;
 import nicksolutions.contracts.application.dayLaborer.dto.DayLaborerDto;
+import nicksolutions.contracts.domain.daylaborer.service.DayLaborerService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/day-laborer")
@@ -41,4 +45,9 @@ public class DayLaborerController {
     public void delete(@PathVariable String id) {
         dayLaborerComponent.delete(id);
     }
+
+  @GetMapping("/available")
+  public Page<DayLaborerDto> availableLaborers(@RequestParam LocalDate date, @RequestParam LocalTime startHour, @RequestParam LocalTime endHour, @PageableDefault Pageable pageable) {
+    return dayLaborerComponent.findAvailable(date, startHour, endHour, pageable);
+  }
 }
