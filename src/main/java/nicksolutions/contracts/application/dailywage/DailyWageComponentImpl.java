@@ -6,8 +6,12 @@ import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.contracts.domain.dailywage.service.DailyWageService;
 import nicksolutions.core.crud.AbstractApplicationComponent;
 import nicksolutions.core.crud.ApplicationMapper;
+import nicksolutions.core.shared.PaymentStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,13 @@ public class DailyWageComponentImpl extends AbstractApplicationComponent<DailyWa
 
   protected DailyWageComponentImpl(ApplicationMapper<DailyWageDto, DailyWage> mapper, DailyWageService service) {
     super(mapper, service);
+  }
+
+  @Override
+  public Page<DailyWageDto> findWithFilters(String dayLaborerName, String enterpriseName,
+                                            LocalDate workDate, PaymentStatus status, Pageable pageable) {
+    return service.findWithFilters(dayLaborerName, enterpriseName, workDate, status, pageable)
+        .map(mapper::toDto);
   }
 
   @Override
