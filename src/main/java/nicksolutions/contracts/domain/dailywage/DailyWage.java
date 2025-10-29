@@ -45,8 +45,8 @@ public class DailyWage extends BaseEntityMultiTenancy {
     @Column(name = "deduction")
     private BigDecimal deduction;
 
-    @Column(name = "paymentValue")
-    private BigDecimal paymentValue;
+    @Column(name = "day_laborer_payment_value")
+    private BigDecimal dayLaborerPaymentValue;
 
     @Column(name = "notes")
     private String notes;

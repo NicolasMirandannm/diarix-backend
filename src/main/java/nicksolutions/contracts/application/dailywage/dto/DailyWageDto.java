@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -26,11 +25,11 @@ public class DailyWageDto implements Serializable {
 
   private String id;
   private EnterpriseDto enterprise;
-  private List<DayLaborerDto> dayLaborer;
+  private DayLaborerDto dayLaborer;
   private BigDecimal baseDailyRate;
   private BigDecimal bonus;
   private BigDecimal deduction;
-  private BigDecimal paymentValue;
+  private BigDecimal dayLaborerPaymentValue;
   private String notes;
   private PaymentStatus paymentStatus;
   private LocalDate workDate;
