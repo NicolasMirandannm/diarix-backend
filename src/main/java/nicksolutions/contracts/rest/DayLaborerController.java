@@ -2,7 +2,7 @@ package nicksolutions.contracts.rest;
 
 import nicksolutions.contracts.application.dayLaborer.DayLaborerComponent;
 import nicksolutions.contracts.application.dayLaborer.dto.DayLaborerDto;
-import nicksolutions.contracts.domain.daylaborer.service.DayLaborerService;
+import nicksolutions.core.shared.StatusRegister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,10 +21,16 @@ public class DayLaborerController {
         this.dayLaborerComponent = dayLaborerComponent;
     }
 
-    @GetMapping
-    public Page<DayLaborerDto> findAll(@PageableDefault Pageable pageable) {
-        return dayLaborerComponent.list(pageable.getPageNumber(), pageable.getPageSize());
-    }
+  @GetMapping
+  public Page<DayLaborerDto> findAll(
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String cpf,
+      @RequestParam(required = false) String phoneNumber,
+      @RequestParam(required = false) StatusRegister status,
+      @PageableDefault Pageable pageable) {
+
+    return dayLaborerComponent.findWithFilters(name, cpf, phoneNumber, status, pageable);
+  }
 
     @GetMapping("/{id}")
     public DayLaborerDto findById(@PathVariable String id) {

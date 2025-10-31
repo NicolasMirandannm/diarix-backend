@@ -1,4 +1,4 @@
-package nicksolutions.contracts.domain.dailywage.service;
+package nicksolutions.contracts.domain.dailywage.service.filters;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;

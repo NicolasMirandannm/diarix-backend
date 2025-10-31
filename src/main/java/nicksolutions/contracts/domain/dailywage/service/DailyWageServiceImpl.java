@@ -2,6 +2,7 @@ package nicksolutions.contracts.domain.dailywage.service;
 
 import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.contracts.domain.dailywage.DailyWageRepository;
+import nicksolutions.contracts.domain.dailywage.service.filters.DailyWageSpecifications;
 import nicksolutions.core.crud.BaseAbstractServiceImpl;
 import nicksolutions.core.shared.PaymentStatus;
 import org.springframework.data.domain.Page;
