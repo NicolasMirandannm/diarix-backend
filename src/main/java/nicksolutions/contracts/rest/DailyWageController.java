@@ -2,6 +2,7 @@ package nicksolutions.contracts.rest;
 
 import nicksolutions.contracts.application.dailywage.DailyWageComponent;
 import nicksolutions.contracts.application.dailywage.dto.DailyWageDto;
+import nicksolutions.contracts.application.dailywage.dto.DailyWorkRegisterDto;
 import nicksolutions.core.shared.PaymentStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/daily-wage")
@@ -38,8 +40,8 @@ public class DailyWageController {
     }
 
     @PostMapping
-    public DailyWageDto create(@RequestBody DailyWageDto dailyWageDto) {
-        return dailyWageComponent.create(dailyWageDto);
+    public List<DailyWageDto> create(@RequestBody DailyWorkRegisterDto dailyWorkRegisterDto) {
+        return dailyWageComponent.dailyWorkRegister(dailyWorkRegisterDto);
     }
 
     @PutMapping("/{id}")
