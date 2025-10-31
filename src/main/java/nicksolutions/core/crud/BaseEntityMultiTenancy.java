@@ -27,5 +27,6 @@ public abstract class BaseEntityMultiTenancy extends BaseEntity {
   @PreUpdate
   public void preUpdate() {
     super.preUpdate();
+    this.setManagerId(SecurityContextHolder.getContext().getAuthentication().getName());
   }
 }

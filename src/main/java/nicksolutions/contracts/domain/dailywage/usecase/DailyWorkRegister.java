@@ -8,6 +8,7 @@ import nicksolutions.contracts.domain.daylaborer.DayLaborer;
 import nicksolutions.contracts.domain.enterprise.Enterprise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class DailyWorkRegister {
     this.dailyWageService = dailyWageService;
   }
 
+  @Transactional
   public List<DailyWage> execute(DailyWorkRegisterDto dailyWorkRegisterDto) {
     return dailyWorkRegisterDto.getDayLaborers().stream()
         .map(dayLaborerWorkDto -> getDailyWage(dailyWorkRegisterDto, dayLaborerWorkDto))

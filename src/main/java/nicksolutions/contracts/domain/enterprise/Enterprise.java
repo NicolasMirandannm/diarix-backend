@@ -8,6 +8,7 @@ import org.hibernate.annotations.TenantId;
 
 import java.math.BigDecimal;
 
+@Cacheable
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

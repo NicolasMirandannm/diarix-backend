@@ -1,10 +1,10 @@
 insert into enterprise (id, manager_id, name, cnpj, owner_name, owner_email, owner_phone, address, status, base_daily_rate, created_by, modified_by, version)
 values
-    ('1a9b56a1-8f73-4b21-8c9f-001', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Construtora Alpha', '45.123.987/0001-10', 'Carlos Silva', 'carlos.alpha@empresa.com', '(11) 98888-1111', 'Rua das Palmeiras, 120 - SP', 'ATIVA', 250.00, 'system', 'system', 1),
-    ('1a9b56a1-8f73-4b21-8c9f-002', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Serviços Beta LTDA', '18.654.321/0001-55', 'Fernanda Souza', 'fernanda.beta@empresa.com', '(11) 97777-2222', 'Av. Paulista, 1000 - SP', 'ATIVA', 300.00, 'system', 'system', 1),
-    ('1a9b56a1-8f73-4b21-8c9f-003', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Manutenção Gama', '32.987.654/0001-22', 'João Pereira', 'joao.gama@empresa.com', '(11) 96666-3333', 'Rua dos Lírios, 50 - SP', 'ATIVA', 220.00, 'system', 'system', 1),
-    ('1a9b56a1-8f73-4b21-8c9f-004', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Reformas Delta', '12.345.678/0001-99', 'Mariana Costa', 'mariana.delta@empresa.com', '(11) 95555-4444', 'Av. Liberdade, 300 - SP', 'ATIVA', 270.00, 'system', 'system', 1),
-    ('1a9b56a1-8f73-4b21-8c9f-005', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Limpeza Epsilon', '54.321.678/0001-77', 'Roberto Lima', 'roberto.epsilon@empresa.com', '(11) 94444-5555', 'Rua Aurora, 12 - SP', 'ATIVA', 200.00, 'system', 'system', 1);
+    ('1a9b56a1-8f73-4b21-8c9f-001', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Construtora Alpha', '45.123.987/0001-10', 'Carlos Silva', 'carlos.alpha@empresa.com', '(11) 98888-1111', 'Rua das Palmeiras, 120 - SP', 'ATIVO', 250.00, 'system', 'system', 1),
+    ('1a9b56a1-8f73-4b21-8c9f-002', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Serviços Beta LTDA', '18.654.321/0001-55', 'Fernanda Souza', 'fernanda.beta@empresa.com', '(11) 97777-2222', 'Av. Paulista, 1000 - SP', 'ATIVO', 300.00, 'system', 'system', 1),
+    ('1a9b56a1-8f73-4b21-8c9f-003', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Manutenção Gama', '32.987.654/0001-22', 'João Pereira', 'joao.gama@empresa.com', '(11) 96666-3333', 'Rua dos Lírios, 50 - SP', 'ATIVO', 220.00, 'system', 'system', 1),
+    ('1a9b56a1-8f73-4b21-8c9f-004', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Reformas Delta', '12.345.678/0001-99', 'Mariana Costa', 'mariana.delta@empresa.com', '(11) 95555-4444', 'Av. Liberdade, 300 - SP', 'ATIVO', 270.00, 'system', 'system', 1),
+    ('1a9b56a1-8f73-4b21-8c9f-005', 'ebae93ea-59e3-4810-8f37-693d59f6305b', 'Limpeza Epsilon', '54.321.678/0001-77', 'Roberto Lima', 'roberto.epsilon@empresa.com', '(11) 94444-5555', 'Rua Aurora, 12 - SP', 'ATIVO', 200.00, 'system', 'system', 1);
 
 
 insert into day_laborer (id, manager_id, name, cpf, phone_number, status, pix_key, created_by, modified_by, version)

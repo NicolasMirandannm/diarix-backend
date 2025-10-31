@@ -35,7 +35,7 @@ public class DailyWageComponentImpl extends AbstractApplicationComponent<DailyWa
   }
 
   @Override
-  public List<DailyWageDto> registerDailyWork(DailyWorkRegisterDto dailyWorkRegisterDto) {
+  public List<DailyWageDto> dailyWorkRegister(DailyWorkRegisterDto dailyWorkRegisterDto) {
     return dailyWorkRegister.execute(dailyWorkRegisterDto).stream().map(this.mapper::toDto).toList();
   }
 }

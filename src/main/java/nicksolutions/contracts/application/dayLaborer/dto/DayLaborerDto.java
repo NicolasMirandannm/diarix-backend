@@ -26,7 +26,4 @@ public class DayLaborerDto implements Serializable {
     private StatusRegister status;
     private String pixKey;
     private Long version;
-    private BigDecimal deduction;
-    private BigDecimal bonus;
-    private BigDecimal paymentValue;
 }

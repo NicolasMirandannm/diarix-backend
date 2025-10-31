@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface DailyWageComponent extends ApplicationComponent<DailyWageDto> {
 
-  List<DailyWageDto> registerDailyWork(DailyWorkRegisterDto dailyWorkRegisterDto);
+  List<DailyWageDto> dailyWorkRegister(DailyWorkRegisterDto dailyWorkRegisterDto);
 
 
   Page<DailyWageDto> findWithFilters(String dayLaborerName, String enterpriseName,

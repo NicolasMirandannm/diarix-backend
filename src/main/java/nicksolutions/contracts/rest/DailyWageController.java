@@ -41,7 +41,7 @@ public class DailyWageController {
 
     @PostMapping
     public List<DailyWageDto> create(@RequestBody DailyWorkRegisterDto dailyWorkRegisterDto) {
-        return dailyWageComponent.registerDailyWork(dailyWorkRegisterDto);
+        return dailyWageComponent.dailyWorkRegister(dailyWorkRegisterDto);
     }
 
     @PutMapping("/{id}")

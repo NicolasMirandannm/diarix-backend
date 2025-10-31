@@ -28,11 +28,11 @@ public class DailyWage extends BaseEntityMultiTenancy {
     @Column(name = "manager_id")
     private String managerId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enterprise_id", nullable = false)
     private Enterprise enterprise;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "day_laborer_id", nullable = false)
     private DayLaborer dayLaborer;
 
