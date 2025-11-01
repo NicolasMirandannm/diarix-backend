@@ -2,6 +2,7 @@ package nicksolutions.contracts.domain.dailywage.service;
 
 import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.contracts.domain.dailywage.DailyWageRepository;
+import nicksolutions.contracts.domain.dailywage.service.filters.DailyWageSpecifications;
 import nicksolutions.contracts.domain.daylaborer.service.DayLaborerService;
 import nicksolutions.contracts.domain.enterprise.service.EnterpriseService;
 import nicksolutions.core.crud.BaseAbstractServiceImpl;
