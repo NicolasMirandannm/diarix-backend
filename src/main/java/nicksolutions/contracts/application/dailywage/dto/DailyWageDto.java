@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import nicksolutions.contracts.application.dayLaborer.dto.DayLaborerDto;
 import nicksolutions.contracts.application.enterprise.dto.EnterpriseDto;
+import nicksolutions.contracts.application.payment.dto.PaymentDto;
 import nicksolutions.core.shared.PaymentStatus;
 
 import java.io.Serial;
@@ -26,10 +27,12 @@ public class DailyWageDto implements Serializable {
   private String id;
   private EnterpriseDto enterprise;
   private DayLaborerDto dayLaborer;
+  private String paymentId;
   private BigDecimal baseDailyRate;
   private BigDecimal bonus;
   private BigDecimal deduction;
   private BigDecimal dayLaborerPaymentValue;
+  private BigDecimal valuePaid;
   private String notes;
   private PaymentStatus paymentStatus;
   private LocalDate workDate;

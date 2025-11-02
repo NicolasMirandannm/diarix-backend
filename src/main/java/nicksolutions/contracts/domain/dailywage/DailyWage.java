@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import nicksolutions.contracts.domain.daylaborer.DayLaborer;
 import nicksolutions.contracts.domain.enterprise.Enterprise;
+import nicksolutions.contracts.domain.payment.Payment;
 import nicksolutions.core.crud.BaseEntityMultiTenancy;
 import nicksolutions.core.shared.PaymentStatus;
 import org.hibernate.annotations.TenantId;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.TenantId;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -29,12 +31,16 @@ public class DailyWage extends BaseEntityMultiTenancy {
     private String managerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "enterprise_id", nullable = false)
+    @JoinColumn(name = "enterprise_id", insertable = false, updatable = false, nullable = false)
     private Enterprise enterprise;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "day_laborer_id", nullable = false)
+    @JoinColumn(name = "day_laborer_id", insertable = false, updatable = false, nullable = false)
     private DayLaborer dayLaborer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id", insertable = false, updatable = false)
+    private Payment payment;
 
     @Column(name = "base_daily_rate")
     private BigDecimal baseDailyRate;
@@ -63,4 +69,12 @@ public class DailyWage extends BaseEntityMultiTenancy {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
+
+    public BigDecimal computePaymentValue() {
+        BigDecimal dayLaborerValue = Optional.ofNullable(dayLaborerPaymentValue).orElse(BigDecimal.ZERO);
+        BigDecimal bonusValue = Optional.ofNullable(bonus).orElse(BigDecimal.ZERO);
+        BigDecimal deductionValue = Optional.ofNullable(deduction).orElse(BigDecimal.ZERO);
+
+        return dayLaborerValue.add(bonusValue).subtract(deductionValue);
+    }
 }

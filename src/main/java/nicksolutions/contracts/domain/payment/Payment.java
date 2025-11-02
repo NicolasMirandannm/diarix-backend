@@ -10,6 +10,7 @@ import org.hibernate.annotations.TenantId;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -28,7 +29,7 @@ public class Payment extends BaseEntityMultiTenancy {
   private String managerId;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "payment_id", nullable = false)
+  @JoinColumn(name = "payment_id", updatable = false, insertable = false, nullable = false)
   private List<DailyWage> dailyWages;
 
   @Column(name = "date")
@@ -43,6 +44,10 @@ public class Payment extends BaseEntityMultiTenancy {
 
   @Column(name = "observations")
   private String observations;
+
+  public List<String> getDailyWageIds() {
+    return dailyWages.stream().map(DailyWage::getId).collect(Collectors.toList());
+  }
 }
 
 

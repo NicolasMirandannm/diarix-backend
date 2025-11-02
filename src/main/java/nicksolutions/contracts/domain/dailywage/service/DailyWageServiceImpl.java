@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class DailyWageServiceImpl extends BaseAbstractServiceImpl<DailyWage, DailyWageRepository> implements DailyWageService {
@@ -46,5 +47,17 @@ public class DailyWageServiceImpl extends BaseAbstractServiceImpl<DailyWage, Dai
     );
 
     return repository.findAll(spec, pageable);
+  }
+
+  @Override
+  public List<DailyWage> findByIds(List<String> ids) {
+    return repository.findAllByIdIn(ids);
+  }
+
+  @Override
+  public List<DailyWage> updatePaymentStatus(List<String> dailyWageIds, PaymentStatus paymentStatus) {
+    List<DailyWage> dailyWages = findByIds(dailyWageIds);
+    dailyWages.forEach(dailyWage -> dailyWage.setPaymentStatus(paymentStatus));
+    return repository.saveAll(dailyWages);
   }
 }

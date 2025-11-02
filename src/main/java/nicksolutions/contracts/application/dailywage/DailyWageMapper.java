@@ -6,8 +6,11 @@ import nicksolutions.contracts.application.enterprise.dto.EnterpriseDto;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.contracts.domain.daylaborer.DayLaborer;
 import nicksolutions.contracts.domain.enterprise.Enterprise;
+import nicksolutions.contracts.domain.payment.Payment;
 import nicksolutions.core.crud.ApplicationMapper;
 import org.springframework.stereotype.Component;
+
+import static java.util.Objects.isNull;
 
 @Component
 public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWage> {
@@ -18,6 +21,7 @@ public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWag
         .id(entity.getId())
         .enterprise(toEnterpriseDto(entity.getEnterprise()))
         .dayLaborer(toDayLaborerDto(entity.getDayLaborer()))
+        .paymentId(toPaymentDto(entity.getPayment()))
         .baseDailyRate(entity.getBaseDailyRate())
         .bonus(entity.getBonus())
         .deduction(entity.getDeduction())
@@ -29,6 +33,13 @@ public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWag
         .endHour(entity.getEndHour())
         .version(entity.getVersion())
         .build();
+  }
+
+  private String toPaymentDto(Payment payment) {
+    if (isNull(payment)) {
+      return null;
+    }
+    return payment.getId();
   }
 
   private EnterpriseDto toEnterpriseDto(Enterprise enterprise) {
@@ -57,6 +68,7 @@ public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWag
         .id(dto.getId())
         .enterprise(toEnterpriseEntity(dto.getEnterprise()))
         .dayLaborer(toDayLaborerEntity(dto.getDayLaborer()))
+        .payment(toPaymentEntity(dto.getPaymentId()))
         .baseDailyRate(dto.getBaseDailyRate())
         .bonus(dto.getBonus())
         .deduction(dto.getDeduction())
@@ -69,6 +81,13 @@ public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWag
         .build();
     dailyWage.setVersion(dto.getVersion());
     return dailyWage;
+  }
+
+  private Payment toPaymentEntity(String paymentId) {
+    if (isNull(paymentId)) {
+      return null;
+    }
+    return Payment.builder().id(paymentId).build();
   }
 
   private Enterprise toEnterpriseEntity(EnterpriseDto enterpriseDto) {
