@@ -49,7 +49,7 @@ public abstract class BaseEntity {
   private Long version;
 
   protected void prePersist() {
-    this.setId(UUID.randomUUID().toString());
+    this.setId(UUID.randomUUID().toString().replace("-", ""));
     this.createdDate = OffsetDateTime.now();
     this.modifiedDate = OffsetDateTime.now();
     this.createdBy = SecurityContextHolder.getContext().getAuthentication().getName();
