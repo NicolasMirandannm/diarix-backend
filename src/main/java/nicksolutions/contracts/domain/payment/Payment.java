@@ -4,11 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
 import nicksolutions.core.crud.BaseEntityMultiTenancy;
-import nicksolutions.core.shared.StatusRegister;
 import org.hibernate.annotations.TenantId;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,12 +27,11 @@ public class Payment extends BaseEntityMultiTenancy {
   @Column(name = "manager_id")
   private String managerId;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "payment_id", updatable = false, insertable = false, nullable = false)
+  @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY)
   private List<DailyWage> dailyWages;
 
   @Column(name = "date")
-  private LocalDateTime date;
+  private LocalDate date;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "method")

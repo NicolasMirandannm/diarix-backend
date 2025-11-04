@@ -5,9 +5,12 @@ import nicksolutions.contracts.application.dayLaborer.dto.DayLaborerDto;
 import nicksolutions.contracts.application.enterprise.dto.EnterpriseDto;
 import nicksolutions.contracts.application.payment.dto.PaymentDto;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
+import nicksolutions.contracts.domain.daylaborer.DayLaborer;
 import nicksolutions.contracts.domain.payment.Payment;
 import nicksolutions.core.crud.ApplicationMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class PaymentMapper implements ApplicationMapper<PaymentDto, Payment> {
@@ -21,7 +24,20 @@ public class PaymentMapper implements ApplicationMapper<PaymentDto, Payment> {
         .method(entity.getMethod())
         .observations(entity.getObservations())
         .dailyWages(entity.getDailyWages().stream().map(this::toDailyWageDto).toList())
+        .dayLaborer(toDayLaborerDto(entity.getDailyWages()))
+        .version(entity.getVersion())
         .build();
+  }
+
+  private DayLaborerDto toDayLaborerDto(List<DailyWage> dailyWages) {
+    return dailyWages.stream()
+        .findFirst()
+        .map(dailyWage -> DayLaborerDto.builder()
+            .id(dailyWage.getId())
+            .name(dailyWage.getDayLaborer().getName())
+            .pixKey(dailyWage.getDayLaborer().getPixKey())
+            .build())
+        .orElse(null);
   }
 
   private DailyWageDto toDailyWageDto(DailyWage dailyWage) {
@@ -40,7 +56,7 @@ public class PaymentMapper implements ApplicationMapper<PaymentDto, Payment> {
 
   @Override
   public Payment toEntity(PaymentDto paymentDto) {
-    return Payment.builder()
+    Payment payment = Payment.builder()
         .id(paymentDto.getId())
         .date(paymentDto.getDate())
         .value(paymentDto.getValue())
@@ -48,6 +64,8 @@ public class PaymentMapper implements ApplicationMapper<PaymentDto, Payment> {
         .observations(paymentDto.getObservations())
         .dailyWages(paymentDto.getDailyWages().stream().map(this::toDailyWageEntity).toList())
         .build();
+    payment.setVersion(paymentDto.getVersion());
+    return payment;
   }
 
   private DailyWage toDailyWageEntity(DailyWageDto dailyWageDto) {

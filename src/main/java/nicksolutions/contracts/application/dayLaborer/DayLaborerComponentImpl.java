@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Component
 public class DayLaborerComponentImpl extends AbstractApplicationComponent<DayLaborerDto, DayLaborer, DayLaborerService> implements DayLaborerComponent {
@@ -30,5 +31,13 @@ public class DayLaborerComponentImpl extends AbstractApplicationComponent<DayLab
   public Page<DayLaborerDto> findWithFilters(String name, String cpf, String phoneNumber, StatusRegister status, Pageable pageable) {
     return service.findWithFilters(name, cpf, phoneNumber, status, pageable)
         .map(mapper::toDto);
+  }
+
+  @Override
+  public List<DayLaborerDto> findAllWithPendingPayments() {
+      return service.findAllWithPendingPayments()
+          .stream()
+          .map(mapper::toDto)
+          .toList();
   }
 }

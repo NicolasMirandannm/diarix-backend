@@ -31,6 +31,7 @@ public class DailyWageMapper implements ApplicationMapper<DailyWageDto, DailyWag
         .workDate(entity.getWorkDate())
         .startHour(entity.getStartHour())
         .endHour(entity.getEndHour())
+        .valuePaid(entity.computePaymentValue())
         .version(entity.getVersion())
         .build();
   }

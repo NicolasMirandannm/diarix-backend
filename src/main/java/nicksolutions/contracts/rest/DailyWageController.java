@@ -39,6 +39,17 @@ public class DailyWageController {
         return dailyWageComponent.getById(id);
     }
 
+    @GetMapping("/day-laborer/{dayLaborerId}")
+    public List<DailyWageDto> findByDayLaborerIdAndFilters(
+        @PathVariable("dayLaborerId") String dayLaborerId,
+        @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+        @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+        @RequestParam(name = "paymentStatus") PaymentStatus paymentStatus,
+        @RequestParam(name = "enterpriseId", required = false) String enterpriseId
+    ) {
+      return dailyWageComponent.findByDayLaborerIdAndFilters(dayLaborerId, startDate, endDate, paymentStatus, enterpriseId);
+    }
+
     @PostMapping
     public List<DailyWageDto> create(@RequestBody DailyWorkRegisterDto dailyWorkRegisterDto) {
         return dailyWageComponent.dailyWorkRegister(dailyWorkRegisterDto);

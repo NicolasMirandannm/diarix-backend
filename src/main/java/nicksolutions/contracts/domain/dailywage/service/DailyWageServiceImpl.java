@@ -5,6 +5,7 @@ import nicksolutions.contracts.domain.dailywage.DailyWageRepository;
 import nicksolutions.contracts.domain.dailywage.service.filters.DailyWageSpecifications;
 import nicksolutions.contracts.domain.daylaborer.service.DayLaborerService;
 import nicksolutions.contracts.domain.enterprise.service.EnterpriseService;
+import nicksolutions.contracts.domain.payment.Payment;
 import nicksolutions.core.crud.BaseAbstractServiceImpl;
 import nicksolutions.core.shared.PaymentStatus;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @Service
 public class DailyWageServiceImpl extends BaseAbstractServiceImpl<DailyWage, DailyWageRepository> implements DailyWageService {
@@ -55,9 +58,19 @@ public class DailyWageServiceImpl extends BaseAbstractServiceImpl<DailyWage, Dai
   }
 
   @Override
-  public List<DailyWage> updatePaymentStatus(List<String> dailyWageIds, PaymentStatus paymentStatus) {
-    List<DailyWage> dailyWages = findByIds(dailyWageIds);
-    dailyWages.forEach(dailyWage -> dailyWage.setPaymentStatus(paymentStatus));
+  public List<DailyWage> updatePaymentStatus(Payment payment, PaymentStatus paymentStatus) {
+    List<DailyWage> dailyWages = findByIds(payment.getDailyWageIds());
+    dailyWages.forEach(dailyWage -> {
+      dailyWage.setPaymentStatus(paymentStatus);
+      dailyWage.setPayment(paymentStatus == PaymentStatus.PAGO ? payment : null);
+    });
     return repository.saveAll(dailyWages);
+  }
+
+  @Override
+  public List<DailyWage> findByDayLaborerIdAndFilters(String dayLaborerId, LocalDate startDate, LocalDate endDate, PaymentStatus paymentStatus, String enterpriseId) {
+    return isNull(enterpriseId)
+        ? repository.findByDayLaborerIdAndWorkDateBetweenAndPaymentStatus(dayLaborerId, startDate, endDate, paymentStatus)
+        : repository.findByDayLaborerIdAndEnterpriseIdAndWorkDateBetweenAndPaymentStatus(dayLaborerId, enterpriseId, startDate, endDate, paymentStatus);
   }
 }

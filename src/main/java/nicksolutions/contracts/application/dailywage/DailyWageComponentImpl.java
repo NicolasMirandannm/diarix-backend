@@ -35,6 +35,13 @@ public class DailyWageComponentImpl extends AbstractApplicationComponent<DailyWa
   }
 
   @Override
+  public List<DailyWageDto> findByDayLaborerIdAndFilters(String dayLaborerId, LocalDate startDate, LocalDate endDate, PaymentStatus paymentStatus, String enterpriseId) {
+    return service.findByDayLaborerIdAndFilters(dayLaborerId, startDate, endDate, paymentStatus, enterpriseId).stream()
+        .map(mapper::toDto)
+        .toList();
+  }
+
+  @Override
   public List<DailyWageDto> dailyWorkRegister(DailyWorkRegisterDto dailyWorkRegisterDto) {
     return dailyWorkRegister.execute(dailyWorkRegisterDto).stream().map(this.mapper::toDto).toList();
   }

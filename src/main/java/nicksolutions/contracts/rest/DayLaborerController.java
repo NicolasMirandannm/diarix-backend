@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/day-laborer")
 public class DayLaborerController {
 
-    private final DayLaborerComponent dayLaborerComponent;
+  private final DayLaborerComponent dayLaborerComponent;
 
-    public DayLaborerController(DayLaborerComponent dayLaborerComponent) {
-        this.dayLaborerComponent = dayLaborerComponent;
-    }
+  public DayLaborerController(DayLaborerComponent dayLaborerComponent) {
+    this.dayLaborerComponent = dayLaborerComponent;
+  }
 
   @GetMapping
   public Page<DayLaborerDto> findAll(
@@ -32,25 +33,30 @@ public class DayLaborerController {
     return dayLaborerComponent.findWithFilters(name, cpf, phoneNumber, status, pageable);
   }
 
-    @GetMapping("/{id}")
-    public DayLaborerDto findById(@PathVariable String id) {
-        return dayLaborerComponent.getById(id);
-    }
+  @GetMapping("/pending-payments")
+  public List<DayLaborerDto> findAllWithPendingPayments() {
+    return dayLaborerComponent.findAllWithPendingPayments();
+  }
 
-    @PostMapping
-    public DayLaborerDto create(@RequestBody DayLaborerDto dayLaborerDto) {
-        return dayLaborerComponent.create(dayLaborerDto);
-    }
+  @GetMapping("/{id}")
+  public DayLaborerDto findById(@PathVariable String id) {
+    return dayLaborerComponent.getById(id);
+  }
 
-    @PutMapping("/{id}")
-    public DayLaborerDto update(@PathVariable String id, @RequestBody DayLaborerDto dayLaborerDto) {
-        return dayLaborerComponent.update(id, dayLaborerDto);
-    }
+  @PostMapping
+  public DayLaborerDto create(@RequestBody DayLaborerDto dayLaborerDto) {
+    return dayLaborerComponent.create(dayLaborerDto);
+  }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        dayLaborerComponent.delete(id);
-    }
+  @PutMapping("/{id}")
+  public DayLaborerDto update(@PathVariable String id, @RequestBody DayLaborerDto dayLaborerDto) {
+    return dayLaborerComponent.update(id, dayLaborerDto);
+  }
+
+  @DeleteMapping("/{id}")
+  public void delete(@PathVariable String id) {
+    dayLaborerComponent.delete(id);
+  }
 
   @GetMapping("/available")
   public Page<DayLaborerDto> availableLaborers(@RequestParam LocalDate date, @RequestParam LocalTime startHour, @RequestParam LocalTime endHour, @PageableDefault Pageable pageable) {
