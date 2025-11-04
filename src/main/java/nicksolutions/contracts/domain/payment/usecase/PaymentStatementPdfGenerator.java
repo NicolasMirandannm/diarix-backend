@@ -16,7 +16,7 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -66,33 +66,38 @@ public class PaymentStatementPdfGenerator {
 
   private void buildPdf(Payment payment, File pdfFile) throws IOException {
     try (PDDocument document = new PDDocument()) {
+
+      // primeira página
       PDPage page = new PDPage(PDRectangle.A4);
       document.addPage(page);
 
       PDRectangle mediaBox = page.getMediaBox();
-      float margin = 50;
+      float margin = 50f;
+      float bottomMargin = 50f;
       float startX = margin;
       float pageRight = mediaBox.getUpperRightX() - margin;
       float y = mediaBox.getUpperRightY() - margin;
-      float leading = 14;
+      float leading = 14f;
 
-      float columnGap = 100;
+      float columnGap = 100f;
       float availableWidth = mediaBox.getWidth() - 2 * margin - columnGap;
       float columnWidth = availableWidth / 2f;
       float col1X = startX;
       float col2X = startX + columnWidth + columnGap;
 
-      try (PDPageContentStream content = new PDPageContentStream(document, page)) {
+      List<DailyWage> dailyWages = payment.getDailyWages();
 
+      PDPageContentStream content = new PDPageContentStream(document, page);
+      try {
+        // --------- CABEÇALHO (TÍTULO + PAGAMENTO + DIARISTA) ----------
         drawText(content, FONT_BOLD, 18, startX, y,
             "Demonstrativo de Pagamento de Diárias");
         y -= 2 * leading;
 
-        List<DailyWage> dailyWages = payment.getDailyWages();
-
         float pagamentoY = y;
         float diaristaY = y;
 
+        // Dados do pagamento (esquerda)
         drawText(content, FONT_BOLD, 12, col1X, pagamentoY, "Dados do Pagamento");
         pagamentoY -= leading * 1.5f;
 
@@ -132,6 +137,7 @@ public class PaymentStatementPdfGenerator {
           }
         }
 
+        // Dados do diarista (direita)
         if (dailyWages != null && !dailyWages.isEmpty()) {
           DailyWage first = dailyWages.get(0);
           DayLaborer dl = first.getDayLaborer();
@@ -166,27 +172,35 @@ public class PaymentStatementPdfGenerator {
           }
         }
 
+        // descer até o bloco mais baixo
         y = Math.min(pagamentoY, diaristaY) - leading * 1.5f;
 
+        // --------- TABELA DE DIÁRIAS (PAGINADA) ----------
         if (dailyWages != null && !dailyWages.isEmpty()) {
-          drawText(content, FONT_BOLD, 12, startX, y, "Diárias Executadas Pagas");
-          y -= leading * 1.5f;
 
-          drawText(content, FONT_BOLD, 9, startX, y, "Data");
-          drawText(content, FONT_BOLD, 9, startX + 70, y, "Horário");
-          drawText(content, FONT_BOLD, 9, startX + 160, y, "Empresa");
-          drawText(content, FONT_BOLD, 9, startX + 340, y, "Valor Diária");
-          drawText(content, FONT_BOLD, 9, startX + 430, y, "Valor Líquido");
-          y -= leading;
+          // título + cabeçalho da tabela nesta página
+          float sepY = drawDailyHeader(content, startX, y, leading, pageRight);
 
           float topPadding = leading * 1.1f;
           float bottomPadding = leading * 0.6f;
           float extrasOffset = leading * 0.8f;
-
-          float sepY = y;
-          drawSeparatorLine(content, startX, pageRight, sepY);
+          float rowHeight = topPadding + extrasOffset + bottomPadding;
 
           for (DailyWage dw : dailyWages) {
+
+            // se não couber mais uma diária inteira, abre nova página
+            while (sepY - rowHeight < bottomMargin) {
+              content.close();
+
+              page = new PDPage(PDRectangle.A4);
+              document.addPage(page);
+              mediaBox = page.getMediaBox();
+              pageRight = mediaBox.getUpperRightX() - margin;
+
+              content = new PDPageContentStream(document, page);
+              float topY = mediaBox.getUpperRightY() - margin;
+              sepY = drawDailyHeader(content, startX, topY, leading, pageRight);
+            }
 
             String dateStr = dw.getWorkDate() != null
                 ? dw.getWorkDate().format(DATE_FMT)
@@ -213,6 +227,7 @@ public class PaymentStatementPdfGenerator {
             float extrasY = mainY - extrasOffset;
             float nextSepY = extrasY - bottomPadding;
 
+            // linha principal
             drawText(content, FONT_REGULAR, 9, startX, mainY, dateStr);
             drawText(content, FONT_REGULAR, 9, startX + 70, mainY, horario);
             drawText(content, FONT_REGULAR, 9, startX + 160, mainY,
@@ -222,6 +237,7 @@ public class PaymentStatementPdfGenerator {
             drawText(content, FONT_REGULAR, 9, startX + 430, mainY,
                 CURRENCY_FMT.format(netValue));
 
+            // extras
             String extras = "Bônus: " + CURRENCY_FMT.format(bonus)
                 + "   Desconto: " + CURRENCY_FMT.format(deduction);
             if (dw.getNotes() != null && !dw.getNotes().isBlank()) {
@@ -229,15 +245,43 @@ public class PaymentStatementPdfGenerator {
             }
             drawText(content, FONT_REGULAR, 8, startX + 10, extrasY, extras);
 
+            // linha da diária
             drawSeparatorLine(content, startX, pageRight, nextSepY);
 
+            // próxima diária usa essa linha como topo
             sepY = nextSepY;
           }
         }
+
+      } finally {
+        content.close();
       }
 
       document.save(pdfFile);
     }
+  }
+
+  /** Desenha título "Diárias Executadas Pagas" + cabeçalho + primeira linha divisória. */
+  private float drawDailyHeader(PDPageContentStream content,
+                                float startX,
+                                float y,
+                                float leading,
+                                float pageRight) throws IOException {
+
+    drawText(content, FONT_BOLD, 12, startX, y, "Diárias Executadas Pagas");
+    y -= leading * 1.5f;
+
+    drawText(content, FONT_BOLD, 9, startX, y, "Data");
+    drawText(content, FONT_BOLD, 9, startX + 70, y, "Horário");
+    drawText(content, FONT_BOLD, 9, startX + 160, y, "Empresa");
+    drawText(content, FONT_BOLD, 9, startX + 340, y, "Valor Diária");
+    drawText(content, FONT_BOLD, 9, startX + 430, y, "Valor Líquido");
+    y -= leading;
+
+    float sepY = y;
+    drawSeparatorLine(content, startX, pageRight, sepY);
+
+    return sepY;
   }
 
   private static void drawText(PDPageContentStream content,
