@@ -3,6 +3,7 @@ package nicksolutions.contracts.domain.payment;
 import jakarta.persistence.*;
 import lombok.*;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
+import nicksolutions.contracts.domain.daylaborer.DayLaborer;
 import nicksolutions.core.crud.BaseEntityMultiTenancy;
 import org.hibernate.annotations.TenantId;
 
@@ -45,6 +46,14 @@ public class Payment extends BaseEntityMultiTenancy {
 
   public List<String> getDailyWageIds() {
     return dailyWages.stream().map(DailyWage::getId).collect(Collectors.toList());
+  }
+
+  public DayLaborer getDayLaborer() {
+    return dailyWages.stream().findFirst().map(DailyWage::getDayLaborer).orElse(null);
+  }
+
+  public String getDDMMYYYDate() {
+    return String.format("%02d%02d%04d", date.getDayOfMonth(), date.getMonthValue(), date.getYear());
   }
 }
 
