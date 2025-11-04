@@ -20,4 +20,8 @@ public interface DailyWageComponent extends ApplicationComponent<DailyWageDto> {
                                      LocalDate workDate, PaymentStatus status, Pageable pageable);
 
   List<DailyWageDto> findByDayLaborerIdAndFilters(String dayLaborerId, LocalDate startDate, LocalDate endDate, PaymentStatus paymentStatus, String enterpriseId);
+
+  long countFromCurrentMonth();
+
+  Double findTotalProfitForCurrentMonth();
 }

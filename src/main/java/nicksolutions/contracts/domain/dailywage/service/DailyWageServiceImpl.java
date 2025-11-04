@@ -73,4 +73,16 @@ public class DailyWageServiceImpl extends BaseAbstractServiceImpl<DailyWage, Dai
         ? repository.findByDayLaborerIdAndWorkDateBetweenAndPaymentStatus(dayLaborerId, startDate, endDate, paymentStatus)
         : repository.findByDayLaborerIdAndEnterpriseIdAndWorkDateBetweenAndPaymentStatus(dayLaborerId, enterpriseId, startDate, endDate, paymentStatus);
   }
+
+  @Override
+  public long countFromCurrentMonth() {
+    LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1);
+    LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+    return repository.countByWorkDateBetween(startOfMonth, endOfMonth);
+  }
+
+  @Override
+  public Double findTotalProfitForCurrentMonth() {
+    return repository.findTotalProfitForCurrentMonth();
+  }
 }

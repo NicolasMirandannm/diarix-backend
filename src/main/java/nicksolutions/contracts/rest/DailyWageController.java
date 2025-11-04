@@ -64,4 +64,14 @@ public class DailyWageController {
     public void delete(@PathVariable String id) {
         dailyWageComponent.delete(id);
     }
+
+    @GetMapping("/count/current-month")
+    public long countFromCurrentMonth() {
+      return dailyWageComponent.countFromCurrentMonth();
+    }
+
+    @GetMapping("/total-profit/current-month")
+    public Double getTotalProfitForCurrentMonth() {
+      return dailyWageComponent.findTotalProfitForCurrentMonth();
+    }
 }

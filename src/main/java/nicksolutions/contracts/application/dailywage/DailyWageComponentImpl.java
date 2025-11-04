@@ -45,4 +45,14 @@ public class DailyWageComponentImpl extends AbstractApplicationComponent<DailyWa
   public List<DailyWageDto> dailyWorkRegister(DailyWorkRegisterDto dailyWorkRegisterDto) {
     return dailyWorkRegister.execute(dailyWorkRegisterDto).stream().map(this.mapper::toDto).toList();
   }
+
+  @Override
+  public long countFromCurrentMonth() {
+    return service.countFromCurrentMonth();
+  }
+
+  @Override
+  public Double findTotalProfitForCurrentMonth() {
+    return service.findTotalProfitForCurrentMonth();
+  }
 }

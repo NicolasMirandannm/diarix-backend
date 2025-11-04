@@ -20,4 +20,8 @@ public interface DailyWageService extends BaseService<DailyWage> {
   List<DailyWage> updatePaymentStatus(Payment payment, PaymentStatus paymentStatus);
 
   List<DailyWage> findByDayLaborerIdAndFilters(String dayLaborerId, LocalDate startDate, LocalDate endDate, PaymentStatus paymentStatus, String enterpriseId);
+
+  long countFromCurrentMonth();
+
+  Double findTotalProfitForCurrentMonth();
 }
