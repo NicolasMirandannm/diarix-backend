@@ -28,5 +28,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: nicksolutions/diarixpro-backend:latest
+          tags: nicksolutions/diarixpro-backend:1.0
           file: ./Dockerfile
