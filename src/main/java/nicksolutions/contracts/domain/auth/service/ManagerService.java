@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ManagerService extends BaseService<Manager> {
   boolean existsByEmail(String email);
   Optional<Manager> findByEmail(String email);
+  boolean existsById(String managerId);
 }

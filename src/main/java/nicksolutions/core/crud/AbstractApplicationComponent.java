@@ -31,6 +31,11 @@ public abstract class AbstractApplicationComponent<Dto, Entity extends BaseEntit
     Entity existingEntity = service.findByIdOrThrow(id);
     Entity entityToUpdate = mapper.toEntity(dto);
     entityToUpdate.setId(existingEntity.getId());
+    entityToUpdate.setCreatedBy(existingEntity.getCreatedBy());
+    entityToUpdate.setCreatedDate(existingEntity.getCreatedDate());
+    entityToUpdate.setModifiedBy(existingEntity.getModifiedBy());
+    entityToUpdate.setModifiedDate(existingEntity.getModifiedDate());
+    entityToUpdate.setVersion(existingEntity.getVersion());
 
     return mapper.toDto(service.save(entityToUpdate));
   }

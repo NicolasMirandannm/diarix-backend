@@ -25,4 +25,9 @@ public class ManagerServiceImpl extends BaseAbstractServiceImpl<Manager, Manager
   public Optional<Manager> findByEmail(String email) {
     return repository.findByEmail(email);
   }
+
+  @Override
+  public boolean existsById(String managerId) {
+    return repository.existsById(managerId);
+  }
 }

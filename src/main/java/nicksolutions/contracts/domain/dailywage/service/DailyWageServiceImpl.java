@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,6 +58,7 @@ public class DailyWageServiceImpl extends BaseAbstractServiceImpl<DailyWage, Dai
     return repository.findAllByIdIn(ids);
   }
 
+  @Transactional
   @Override
   public List<DailyWage> updatePaymentStatus(Payment payment, PaymentStatus paymentStatus) {
     List<DailyWage> dailyWages = findByIds(payment.getDailyWageIds());

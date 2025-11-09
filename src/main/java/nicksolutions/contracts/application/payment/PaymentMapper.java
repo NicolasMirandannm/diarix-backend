@@ -5,7 +5,6 @@ import nicksolutions.contracts.application.dayLaborer.dto.DayLaborerDto;
 import nicksolutions.contracts.application.enterprise.dto.EnterpriseDto;
 import nicksolutions.contracts.application.payment.dto.PaymentDto;
 import nicksolutions.contracts.domain.dailywage.DailyWage;
-import nicksolutions.contracts.domain.daylaborer.DayLaborer;
 import nicksolutions.contracts.domain.payment.Payment;
 import nicksolutions.core.crud.ApplicationMapper;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ public class PaymentMapper implements ApplicationMapper<PaymentDto, Payment> {
     return dailyWages.stream()
         .findFirst()
         .map(dailyWage -> DayLaborerDto.builder()
-            .id(dailyWage.getId())
+            .id(dailyWage.getDayLaborer().getId())
             .name(dailyWage.getDayLaborer().getName())
             .pixKey(dailyWage.getDayLaborer().getPixKey())
             .build())
